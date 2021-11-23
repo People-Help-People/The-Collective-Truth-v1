@@ -1,0 +1,40 @@
+.App {
+  background-color: #282c34;
+}
+.App-container {  
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  padding: 0% 10%;
+  text-align: center;
+}
+button {
+  background-color: #f0f0f0;
+  color: rgb(5, 4, 4);
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  font-size: 3rem;
+}
+
+button:hover{
+  opacity: .8;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
