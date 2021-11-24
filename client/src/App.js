@@ -13,6 +13,7 @@ import Landing from './screens/Landing';
 import Register from "./screens/Register";
 import Explore from "./screens/Explore";
 import Profile from "./screens/Profile";
+import Asset from "./screens/Asset";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route path="/" element={<Landing />} />
               <Route path="/register" exact element={<Register />} />
               <Route path="/explore" exact element={<Explore />} />
+              <Route path="/explore/:id" element={<Asset />} />
               <Route path="/profile" exact element={<Profile />} />
             </Routes>
           </header>

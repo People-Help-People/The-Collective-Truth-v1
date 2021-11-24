@@ -29,16 +29,31 @@ button.primary {
   color: white;
   font-size: 3rem;
 }
-
-.App-link {
-  color: #61dafb;
+.searchBar{
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap:10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.searchBar input {
+  width: 100%;
+  height:50px;  
+  border: none;
+  border-bottom:2px solid #af4f00;
+  background: none;
+  color:white;
+  font-size: medium;
+}
+.searchBar input:focus{
+  outline: none;  
+}
+
+.searchBar button{
+  background: none;
+  border: 1px solid white;
+  border-radius: 5px;
+  color: white;  
 }
