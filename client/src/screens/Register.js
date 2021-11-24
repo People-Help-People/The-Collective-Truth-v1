@@ -3,12 +3,14 @@ import { useEtherBalance, useEthers } from '@usedapp/core'
 import { formatEther } from '@ethersproject/units'
 import tick from '../assets/tick.png';
 import { Link } from "react-router-dom";
+import { useUserProfile } from "../context/UserProfile";
 
 export default function Register() {
     const [cycle, setCycle] = useState(0);
     const nextCycle = () => {
         setCycle(cycle + 1);
     };
+    const { userProfile, setUserProfile } = useUserProfile();
 
     // Connect Metamask
     const { activateBrowserWallet, account } = useEthers();
@@ -23,7 +25,6 @@ export default function Register() {
     }, [account])
 
     // Update Profile
-
     const formStyle = {
         display: 'flex',
         flexDirection: 'column',
@@ -42,11 +43,6 @@ export default function Register() {
         margin: '10px 0',
         fontSize: '1.2em',
     }
-    const [userProfile, setUserProfile] = useState({
-        account: '',
-        username: 'Hacker',
-        bio: 'Noob.'
-    });
     const collectUserProfile = (e) => {
         e.preventDefault();
         const userBio = {
@@ -56,6 +52,7 @@ export default function Register() {
             account: account
         };
         setUserProfile(userBio);
+        localStorage.setItem('userProfile', JSON.stringify(userBio));
         nextCycle();
     }
 

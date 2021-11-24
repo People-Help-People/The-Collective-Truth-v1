@@ -1,0 +1,21 @@
+.nav{
+    display: flex;
+    justify-content: center;
+}
+
+.profileNav{
+    position: fixed;
+    z-index: 15;
+    top: 0;    
+    right:10px;
+    padding-top:20px;
+}
+
+.profileNav button{
+    background: none;
+    border: none;
+    color: #FF7800;
+    font-size: 1.5rem;
+    padding: 0;
+    margin:10px;
+}
