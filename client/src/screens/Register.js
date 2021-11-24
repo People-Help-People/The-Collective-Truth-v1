@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useEtherBalance, useEthers } from '@usedapp/core'
 import { formatEther } from '@ethersproject/units'
 import tick from '../assets/tick.png';
+import { Link } from "react-router-dom";
 
-export default function Landing() {
+export default function Register() {
     const [cycle, setCycle] = useState(0);
     const nextCycle = () => {
         setCycle(cycle + 1);
@@ -14,8 +15,12 @@ export default function Landing() {
     const etherBalance = useEtherBalance(account);
     const connectWallet = () => {
         activateBrowserWallet();
-        nextCycle();
     };
+    useEffect(() => {
+        if (account && cycle === 0) {
+            nextCycle();
+        }
+    }, [account])
 
     // Update Profile
 
@@ -57,12 +62,6 @@ export default function Landing() {
 
     const components = [
         (<>
-            <h1>Hello Hacker 👋 </h1>
-            <button className="primary" onClick={nextCycle}>
-                Join the Space!
-            </button>
-        </>),
-        (<>
             <button className="primary" onClick={connectWallet}>Connect your metamask</button>
             <p> If you dont have one. Go and create one real quick. We dont care if it has money or not. Just create a dummy account. There is no fee nor shady stuff anyway!</p>
         </>),
@@ -80,6 +79,7 @@ export default function Landing() {
             <h1>All set!</h1>
             <img src={tick} alt="tick" height="100px" />
             <h1>Welcome Aboard, {userProfile.username} </h1>
+            <Link to="/explore"><button className="primary"> Explore</button></Link>
         </>),
     ]
 
