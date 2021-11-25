@@ -69,3 +69,7 @@ button.primary {
   background: none !important;
   color: white  !important;  
 }
+
+.scoreList{
+  width: 80%;
+}

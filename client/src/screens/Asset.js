@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import apis from '../apis';
-import { Image, Tabs, Tab } from 'react-bootstrap'
+import { Image, Tabs, Tab, Row, Col } from 'react-bootstrap'
+import Ratings from '../components/Ratings';
 
 export default function Asset() {
     let { id } = useParams();
@@ -35,7 +36,7 @@ export default function Asset() {
                     <Image src={asset.logo} rounded height="64px" />
                     <Tabs defaultActiveKey="tab1" id="assetTabs" className="mb-3">
                         <Tab eventKey="tab1" title="General">
-                            Overal Score
+                            <Ratings ratings={asset.ratings} />
                         </Tab>
                         <Tab eventKey="tab2" title="Community">
                             Coming soon...
