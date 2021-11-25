@@ -4,8 +4,13 @@ import cors from 'cors';
 
 const router = express.Router();
 
+let responsesCache = {};
+
 router.get('/:id', cors(), async (req, res) => {
     const { id } = req.params;
+    if (responsesCache[id]) {
+        return res.json(responsesCache[id]);
+    }
     const responseData = await fetch(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?CMC_PRO_API_KEY=${process.env.COINMARKETCAP_API_KEY}&address=${id}`)
     const data = await responseData.json();
     let response = {
@@ -30,7 +35,7 @@ router.get('/:id', cors(), async (req, res) => {
         response.success = false;
         response.message = data.status.error_message;
     }
-
+    responsesCache[id] = response;
     res.json(response);
 })
 

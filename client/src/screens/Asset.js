@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import apis from '../apis';
+import { Image, Tabs, Tab } from 'react-bootstrap'
 
 export default function Asset() {
     let { id } = useParams();
@@ -29,11 +30,23 @@ export default function Asset() {
     return (
         <div>
             {loading ? <div>Loading...</div> : asset.empty ? <div>{asset.message}</div> :
-                <div>
-                    <h1>{asset.name} : {asset.symbol}</h1>
+                <div className="assetContainer">
+                    <h1>{asset.name} ({asset.symbol})</h1>
+                    <Image src={asset.logo} rounded height="64px" />
+                    <Tabs defaultActiveKey="tab1" id="assetTabs" className="mb-3">
+                        <Tab eventKey="tab1" title="General">
+                            Overal Score
+                        </Tab>
+                        <Tab eventKey="tab2" title="Community">
+                            Coming soon...
+                        </Tab>
+                        <Tab eventKey="tab3" title="Experts">
+                            Coming soon...
+                        </Tab>
+                    </Tabs>
                 </div>
             }
 
-        </div>
+        </div >
     )
 }
