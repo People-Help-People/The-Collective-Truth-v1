@@ -1,0 +1,11 @@
+dotenv: .env
+networks:
+    development:
+        verify: False
+    rinkeby:        
+        verify: True
+    kovan:        
+        verify: True
+wallets:
+    from_key: ${PRIVATE_KEY}
+    
