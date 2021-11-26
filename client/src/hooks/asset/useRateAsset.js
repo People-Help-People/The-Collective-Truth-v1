@@ -25,11 +25,10 @@ export const useRateAsset = (assetAddress, setLoading) => {
 
     const rateAsset = (ratings1, ratings2, ratings3) => {
         rateAssetSend(assetAddress, ratings1, ratings2, ratings3);
-        return rateAssetState;
     }
     useEffect(() => {
         if (rateAssetState.status === "Success") {
-            showAlertMessage("Asset rated successfully", "success");
+            showAlertMessage("Thanks for submitting your vote. Every vote counts!", "success");
             setLoading(false);
         } else if (rateAssetState.status === "Exception") {
             showAlertMessage(rateAssetState.errorMessage, "danger");

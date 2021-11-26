@@ -2,16 +2,23 @@ import { useState } from "react";
 import { Col, Row, ListGroup, Badge, Form } from "react-bootstrap";
 import { useAssetRatings } from "../hooks/asset/useAssetRatings";
 import { useRateAsset } from "../hooks/asset/useRateAsset";
+import { useRequestAsset } from "../hooks/asset/useRequestAsset";
 import SpinnerLoading from "../misc/Spinner";
 
-export default function Ratings({ assetAddress,requestAsset }) {
+export default function Ratings({ asset, assetAddress }) {
     const [ratings1, setRatings1] = useState(5);
     const [ratings2, setRatings2] = useState(5);
     const [ratings3, setRatings3] = useState(5);
     const [loading, setLoading] = useState(false);
 
     const [ratings : assetRating] = useAssetRatings(assetAddress);
-    const [rateAsset] = useRateAsset(assetAddress,setLoading);
+    const [rateAsset] = useRateAsset(assetAddress, setLoading);
+    const [requestAsset] = useRequestAsset(setLoading);
+
+    const requestAssetHandler = () => {
+        setLoading(true);
+        requestAsset(asset, assetAddress);
+    }
 
     const submitVote = () => {
         console.log(ratings1, ratings2, ratings3);
@@ -23,19 +30,21 @@ export default function Ratings({ assetAddress,requestAsset }) {
         <div>
             <h3>Asset not found on the chain</h3>
             <p>Now be a good lad and request for the asset so everyone could see the asset you were looking for</p>
-            <button className="primary" onClick={requestAsset}>
-                Request Asset
+            <button className="primary" onClick={requestAssetHandler}>
+                {loading ? <SpinnerLoading /> : "Request Asset"}
             </button>
             <p>The dev team is working on rewarding good folks like you...</p>
         </div>
     ) :
         (
             <div>
+                <Row>
+                    <h1 style={{ float: 'left' }}>
+                        Overall Score : {ratings.overallScore} /10
+                    </h1>
+                </Row>
                 <Row className="mt-3">
                     <Col md={8}>
-                        <h1 style={{ float: 'left' }}>
-                            Overall : {ratings.overallScore} /10
-                        </h1>
                         <ListGroup as="ol" numbered className="scoreList">
                             <ListGroup.Item
                                 as="li"

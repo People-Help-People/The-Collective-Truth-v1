@@ -6,7 +6,7 @@ import { Contract } from "@ethersproject/contracts"
 import networkMapping from "../../chain-info/map.json"
 import { useDisplayAlert } from "../../context/Alert"
 
-export const useRequestAsset = (assetAddress, setLoading) => {
+export const useRequestAsset = (setLoading) => {
     const { showAlertMessage } = useDisplayAlert();
 
     const { abi } = CommunityAudits
@@ -17,9 +17,25 @@ export const useRequestAsset = (assetAddress, setLoading) => {
     const communityAuditsContract = new Contract(
         communityAuditsContractAddress,
         communityAuditsInterface
+
     )
-    
-    const requestAsset = () => { }
+    const { send: requestAssetSend, state: requestAssetState } = useContractFunction(communityAuditsContract, "create", {
+        transactionName: "Create"
+    })
+
+    const requestAsset = (asset,assetAddress) => {
+        requestAssetSend(assetAddress, asset.name, asset.symbol, asset.logo, 0);
+    }
+
+    useEffect(() => {
+        if (requestAssetState.status === "Success") {
+            showAlertMessage("Successfully added asset to the chain. Thank You!", "success");
+            setLoading(false);
+        } else if (requestAssetState.status === "Exception") {
+            showAlertMessage(requestAssetState.errorMessage, "danger");
+            setLoading(false);
+        }
+    }, [requestAssetState])
 
     return [requestAsset];
 }
