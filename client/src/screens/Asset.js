@@ -17,7 +17,7 @@ export default function Asset() {
                     <Image src={asset.logo} rounded height="64px" />
                     <Tabs defaultActiveKey="tab1" id="assetTabs" className="mb-3">
                         <Tab eventKey="tab1" title="General">
-                            <Ratings ratings={assetRating} />
+                            <Ratings ratings={assetRating} assetAddress={id} />
                         </Tab>
                         <Tab eventKey="tab2" title="Community">
                             Coming soon...

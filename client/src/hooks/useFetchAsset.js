@@ -33,7 +33,6 @@ export const useFetchAsset = (id) => {
                 message: 'No ratings available',
             });
         }
-        console.log(assetRating);
     }, [ratingsData]);
 
     useEffect(() => {
