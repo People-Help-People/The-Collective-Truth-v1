@@ -28,6 +28,14 @@ function App() {
               <Route path="/explore" exact element={<Explore />} />
               <Route path="/explore/:id" element={<Asset />} />
               <Route path="/profile" exact element={<Profile />} />
+              <Route
+                path="*"
+                element={
+                  <main style={{ padding: "1rem" }}>
+                    <p>There's nothing here!</p>
+                  </main>
+                }
+              />
             </Routes>
           </header>
           <Footer />
