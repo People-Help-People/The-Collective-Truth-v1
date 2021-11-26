@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { Col, Row, ListGroup, Badge, Form } from "react-bootstrap";
 import { useRateAsset } from "../hooks/useRateAsset";
+import SpinnerLoading from "../misc/Spinner";
 
-export default function Ratings({ ratings,assetAddress }) {
+export default function Ratings({ ratings, assetAddress }) {
     const [ratings1, setRatings1] = useState(5);
     const [ratings2, setRatings2] = useState(5);
     const [ratings3, setRatings3] = useState(5);
+    const [loading, setLoading] = useState(false);
 
-    const [rateAsset] = useRateAsset(assetAddress);
+    const [rateAsset] = useRateAsset(assetAddress,setLoading);
 
     const submitVote = () => {
         console.log(ratings1, ratings2, ratings3);
+        setLoading(true);
         rateAsset(ratings1, ratings2, ratings3);
     }
 
@@ -105,7 +108,7 @@ export default function Ratings({ ratings,assetAddress }) {
                             </ListGroup.Item>
                         </ListGroup>
                         <button onClick={submitVote} className="primary mt-3">
-                            Submit Vote
+                            {loading ? <SpinnerLoading /> : "Submit Vote"}
                         </button>
                     </Col>
                 </Row>

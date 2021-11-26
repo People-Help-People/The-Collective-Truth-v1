@@ -4,8 +4,11 @@ import CommunityAudits from "../chain-info/CommunityAudits.json"
 import { utils, constants } from "ethers"
 import { Contract } from "@ethersproject/contracts"
 import networkMapping from "../chain-info/map.json"
+import { useDisplayAlert } from "../context/Alert"
 
-export const useRateAsset = (assetAddress) => {
+export const useRateAsset = (assetAddress, setLoading) => {
+    const { showAlertMessage } = useDisplayAlert();
+
     const { abi } = CommunityAudits
     // const { chainId } = useEthers()
     // const communityAuditsContractAddress = chainId ? networkMapping[String(chainId)]["CommunityAudits"][0] : constants.AddressZero;
@@ -22,10 +25,17 @@ export const useRateAsset = (assetAddress) => {
 
     const rateAsset = (ratings1, ratings2, ratings3) => {
         rateAssetSend(assetAddress, ratings1, ratings2, ratings3);
+        return rateAssetState;
     }
     useEffect(() => {
+        if (rateAssetState.status === "Success") {
+            showAlertMessage("Asset rated successfully", "success");
+            setLoading(false);
+        } else if (rateAssetState.status === "Exception") {
+            showAlertMessage(rateAssetState.errorMessage, "danger");
+            setLoading(false);
+        }
+    }, [rateAssetState]);
 
-    }, []);
-
-    return [rateAsset];
+    return [rateAsset, rateAssetState];
 }
