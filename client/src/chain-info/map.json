@@ -1,8 +1,9 @@
 {
-  "5777": {
-    "CommunityAudits": [
-      "0x0daF262e79803616f2174E73600F5928e52E4c39",
-      "0xF73532D8f3219E27D3b26d2eF79574906c211205"
+  "4": {
+    "CommunityAudits": [      
+      "0x21823EF61f71730C1Dd8973A76D69E1FF14De111",
+      "0x2b31E8f40dbc974402A35A5c6a83C323abBE1Fb6",
+      "0xDE078e7C6FdB08f8F5F7631a399C423dae9e78dd"
     ]
   }
 }

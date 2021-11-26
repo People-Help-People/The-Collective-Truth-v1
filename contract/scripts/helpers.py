@@ -14,3 +14,9 @@ def get_account():
         # account = accounts.add(os.getenv("PRIVATE_KEY"))
         # account = accounts.load("test")
     return account
+
+def get_verify_flag():
+    return bool(config["networks"][network.show_active()].get("verify_flag"))
+
+def get_deploy_vars():
+    return get_account(),get_verify_flag()

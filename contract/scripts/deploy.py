@@ -1,5 +1,5 @@
 from brownie import CommunityAudits, network, config
-from scripts.helpers import get_account
+from scripts.helpers import get_deploy_vars
 import shutil
 import os
 import yaml
@@ -8,8 +8,8 @@ from web3 import Web3
 
 
 def deploy_community_audits(update_client_flag=False):
-    account = get_account()
-    community_audits = CommunityAudits.deploy({"from": account})
+    account,verify_flag = get_deploy_vars()
+    community_audits = CommunityAudits.deploy({"from": account},publish_source=verify_flag)
 
     print("Deployed CommunityAudits contract to:", community_audits.address)
     if update_client_flag:
