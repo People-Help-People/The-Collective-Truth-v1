@@ -3,11 +3,11 @@ import { Link } from "react-router-dom"
 import { useUserProfile } from "../context/UserProfile"
 
 export default function Onboard() {
-    const { active, userProfile } = useUserProfile();
+    const { account, userProfile } = useUserProfile();
     return (
         <div>
             <h1>Hello {userProfile.username} 👋 </h1>
-            {active ? (
+            {account ? (
                 <div>
                     <Link to="/explore"><button className="primary"> Explore</button></Link>
                 </div>

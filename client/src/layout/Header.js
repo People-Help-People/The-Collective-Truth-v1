@@ -1,7 +1,9 @@
+import { useEthers } from "@usedapp/core";
 import { Link } from "react-router-dom";
 import './Styles.css';
 
 export default function Header() {
+    const { account } = useEthers();
     return (
         <div className="header" style={{ paddingTop: '20px' }}>
             <div className="nav">
@@ -9,9 +11,9 @@ export default function Header() {
                     <h1 style={{ display: 'inline', marginTop: '0', color: 'white', textAlign: "center" }}> Community Audits </h1>
                 </Link>
             </div>
-            <Link className="profileNav" to="/profile">
+            {account != undefined && <Link className="profileNav" to="/profile">
                 <button>Profile</button>
-            </Link>
+            </Link>}
         </div>
     );
 }

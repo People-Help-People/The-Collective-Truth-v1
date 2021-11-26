@@ -9,10 +9,10 @@ const UserProfileProvider = ({ children }) => {
         username: 'Hacker',
         bio: 'Noob.'
     });
-    const { active } = useEthers();
+    const { account } = useEthers();
 
     useEffect(() => {
-        if (active) {
+        if (account) {
             const userProfile = JSON.parse(localStorage.getItem('userProfile'));
             if (userProfile)
                 setUserProfile(userProfile);
@@ -23,11 +23,11 @@ const UserProfileProvider = ({ children }) => {
                 bio: 'Noob.'
             });
         }
-    }, [active]);
+    }, [account]);
 
 
     return (
-        <UserProfile.Provider value={{ userProfile, setUserProfile, active }}>
+        <UserProfile.Provider value={{ userProfile, setUserProfile, account }}>
             {children}
         </UserProfile.Provider>
     )

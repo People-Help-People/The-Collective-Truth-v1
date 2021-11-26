@@ -26,9 +26,9 @@ function App() {
             <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/register" exact element={<Register />} />
-              <Route path="/explore" exact element={<PrivateRoute> <Explore /> </PrivateRoute>} />
-              <Route path="/explore/:id" element={<PrivateRoute><Asset /> </PrivateRoute>} />
-              <Route path="/profile" exact element={<PrivateRoute><Profile /> </PrivateRoute>} />
+              <Route path="/explore" exact element={<Explore />} />
+              <Route path="/explore/:id" element={<Asset />} />
+              <Route path="/profile" exact element={<Profile />} />
               <Route
                 path="*"
                 element={
