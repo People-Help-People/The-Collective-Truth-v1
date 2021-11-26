@@ -2,12 +2,14 @@
 import { useParams } from 'react-router';
 import { Image, Tabs, Tab } from 'react-bootstrap'
 import Ratings from '../components/Ratings';
-import { useFetchAsset } from '../hooks/useFetchAsset';
+import { useFetchAsset } from '../hooks/asset/useFetchAsset';
+import { useRequestAsset } from '../hooks/asset/useRequestAsset';
 
 
 export default function Asset() {
     let { id } = useParams();
-    const [loading, asset, assetRating,requestAsset] = useFetchAsset(id);
+    const [loading, asset] = useFetchAsset(id);
+    const [requestAsset] = useRequestAsset();
 
     return (
         <div>
@@ -17,7 +19,7 @@ export default function Asset() {
                     <Image src={asset.logo} rounded height="64px" />
                     <Tabs defaultActiveKey="tab1" id="assetTabs" className="mb-3">
                         <Tab eventKey="tab1" title="General">
-                            <Ratings ratings={assetRating} assetAddress={id} requestAsset={requestAsset} />
+                            <Ratings assetAddress={id} requestAsset={requestAsset} />
                         </Tab>
                         <Tab eventKey="tab2" title="Community">
                             Coming soon...

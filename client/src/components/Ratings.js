@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { Col, Row, ListGroup, Badge, Form } from "react-bootstrap";
-import { useRateAsset } from "../hooks/useRateAsset";
+import { useAssetRatings } from "../hooks/asset/useAssetRatings";
+import { useRateAsset } from "../hooks/asset/useRateAsset";
 import SpinnerLoading from "../misc/Spinner";
 
-export default function Ratings({ ratings, assetAddress,requestAsset }) {
+export default function Ratings({ assetAddress,requestAsset }) {
     const [ratings1, setRatings1] = useState(5);
     const [ratings2, setRatings2] = useState(5);
     const [ratings3, setRatings3] = useState(5);
     const [loading, setLoading] = useState(false);
 
+    const [ratings : assetRating] = useAssetRatings(assetAddress);
     const [rateAsset] = useRateAsset(assetAddress,setLoading);
 
     const submitVote = () => {
