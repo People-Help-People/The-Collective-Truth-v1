@@ -5,7 +5,7 @@ import { utils, constants } from "ethers"
 import { Contract } from "@ethersproject/contracts"
 import networkMapping from "../chain-info/map.json"
 
-export const useAssetRatings = (assetAddress) => {
+export const useAssetRatings = (assetAddress, valid) => {
     const { abi } = CommunityAudits
     // const { chainId } = useEthers()
     // const communityAuditsContractAddress = chainId ? networkMapping[String(chainId)]["CommunityAudits"][0] : constants.AddressZero;
@@ -15,15 +15,12 @@ export const useAssetRatings = (assetAddress) => {
         communityAuditsContractAddress,
         communityAuditsInterface
     )
-
-
-    const data = useContractCall({
+    const ratingsData = useContractCall({
         abi: communityAuditsInterface,
         address: communityAuditsContractAddress,
         method: "getData",
         args: [assetAddress],
-    }) ?? []
-    
+    }) || [];
 
-    return [data];
+    return [ratingsData];
 }

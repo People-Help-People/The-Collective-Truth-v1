@@ -9,16 +9,18 @@ export const useFetchAsset = (id) => {
     });
 
     const [loading, setLoading] = useState(false);
-    const [data] = useAssetRatings(id);
+    const [ratingsData] = useAssetRatings(id);
 
     const [assetRating, setAssetRating] = useState({
         empty: true,
         message: '',
     });
+    const updateRatings = () => {
+        
+    }
     useEffect(() => {
-        console.log(data);
-        if (data.length > 0) {
-            const assetArray = data[0];
+        if (ratingsData.length > 0) {
+            const assetArray = ratingsData[0];
             setAssetRating({
                 technicalImplementation: parseInt(assetArray[5].technicalImplementation._hex),
                 founderReliability: parseInt(assetArray[5].founderReliability._hex),
@@ -32,7 +34,7 @@ export const useFetchAsset = (id) => {
             });
         }
         console.log(assetRating);
-    }, [data]);
+    }, [ratingsData]);
 
     useEffect(() => {
         const search = async () => {
@@ -40,6 +42,7 @@ export const useFetchAsset = (id) => {
             const data = await apis.asset.get(id);
             if (data.success) {
                 setAsset(data.data);
+                updateRatings();
             } else {
                 setAsset({
                     empty: true,
