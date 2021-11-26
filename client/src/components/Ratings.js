@@ -3,7 +3,7 @@ import { Col, Row, ListGroup, Badge, Form } from "react-bootstrap";
 import { useRateAsset } from "../hooks/useRateAsset";
 import SpinnerLoading from "../misc/Spinner";
 
-export default function Ratings({ ratings, assetAddress }) {
+export default function Ratings({ ratings, assetAddress,requestAsset }) {
     const [ratings1, setRatings1] = useState(5);
     const [ratings2, setRatings2] = useState(5);
     const [ratings3, setRatings3] = useState(5);
@@ -20,6 +20,11 @@ export default function Ratings({ ratings, assetAddress }) {
     return ratings.empty ? (
         <div>
             <h3>Asset not found on the chain</h3>
+            <p>Now be a good lad and request for the asset so everyone could see the asset you were looking for</p>
+            <button className="primary" onClick={requestAsset}>
+                Request Asset
+            </button>
+            <p>The dev team is working on rewarding good folks like you...</p>
         </div>
     ) :
         (
@@ -111,9 +116,6 @@ export default function Ratings({ ratings, assetAddress }) {
                             {loading ? <SpinnerLoading /> : "Submit Vote"}
                         </button>
                     </Col>
-                </Row>
-                <Row>
-
                 </Row>
             </div>
 

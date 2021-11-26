@@ -7,7 +7,7 @@ import { useFetchAsset } from '../hooks/useFetchAsset';
 
 export default function Asset() {
     let { id } = useParams();
-    const [loading, asset, assetRating] = useFetchAsset(id);
+    const [loading, asset, assetRating,requestAsset] = useFetchAsset(id);
 
     return (
         <div>
@@ -17,7 +17,7 @@ export default function Asset() {
                     <Image src={asset.logo} rounded height="64px" />
                     <Tabs defaultActiveKey="tab1" id="assetTabs" className="mb-3">
                         <Tab eventKey="tab1" title="General">
-                            <Ratings ratings={assetRating} assetAddress={id} />
+                            <Ratings ratings={assetRating} assetAddress={id} requestAsset={requestAsset} />
                         </Tab>
                         <Tab eventKey="tab2" title="Community">
                             Coming soon...

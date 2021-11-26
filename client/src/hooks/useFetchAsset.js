@@ -15,8 +15,8 @@ export const useFetchAsset = (id) => {
         empty: true,
         message: '',
     });
-    const updateRatings = () => {
-        
+    const requestAsset = () => {
+        console.log("Nice job");
     }
     useEffect(() => {
         if (ratingsData.length > 0) {
@@ -27,11 +27,6 @@ export const useFetchAsset = (id) => {
                 trustFactor: parseInt(assetArray[5].trustFactor._hex),
                 overallScore: parseInt(assetArray[5].overallScore._hex),
             });
-        } else {
-            setAssetRating({
-                empty: true,
-                message: 'No ratings available',
-            });
         }
     }, [ratingsData]);
 
@@ -41,7 +36,6 @@ export const useFetchAsset = (id) => {
             const data = await apis.asset.get(id);
             if (data.success) {
                 setAsset(data.data);
-                updateRatings();
             } else {
                 setAsset({
                     empty: true,
@@ -53,5 +47,5 @@ export const useFetchAsset = (id) => {
         search();
     }, []);
 
-    return [loading, asset, assetRating];
+    return [loading, asset, assetRating, requestAsset];
 }
