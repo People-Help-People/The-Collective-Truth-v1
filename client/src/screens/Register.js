@@ -20,7 +20,11 @@ export default function Register() {
     };
     useEffect(() => {
         if (account && cycle === 0) {
-            nextCycle();
+            const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+            if (userProfile?.account !== account)
+                nextCycle();
+            else
+                setCycle(2);
         }
     }, [account])
 
@@ -69,7 +73,7 @@ export default function Register() {
                 <input style={inputStyle} name="username" type="text" placeholder="username" />
                 <textarea style={inputStyle} name="bio" type="text" placeholder="Bio" />
                 <button className="primary" type="submit">Submit</button>
-                <button click={nextCycle}>Skip</button>
+                <button onClick={nextCycle}>Skip</button>
             </form>
         </>),
         (<>

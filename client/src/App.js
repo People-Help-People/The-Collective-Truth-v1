@@ -14,6 +14,7 @@ import Register from "./screens/Register";
 import Explore from "./screens/Explore";
 import Profile from "./screens/Profile";
 import Asset from "./screens/Asset";
+import PrivateRoute from "./misc/PrivateRoute";
 
 function App() {
   return (
@@ -25,9 +26,9 @@ function App() {
             <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/register" exact element={<Register />} />
-              <Route path="/explore" exact element={<Explore />} />
-              <Route path="/explore/:id" element={<Asset />} />
-              <Route path="/profile" exact element={<Profile />} />
+              <Route path="/explore" exact element={<PrivateRoute> <Explore /> </PrivateRoute>} />
+              <Route path="/explore/:id" element={<PrivateRoute><Asset /> </PrivateRoute>} />
+              <Route path="/profile" exact element={<PrivateRoute><Profile /> </PrivateRoute>} />
               <Route
                 path="*"
                 element={
