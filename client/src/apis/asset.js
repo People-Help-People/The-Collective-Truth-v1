@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:4000';
+const API_URL = "https://community-audits.herokuapp.com";
 
 const get = async (address, network = '') => {
     const response = await fetch(`${API_URL}/explore/${address}`);
