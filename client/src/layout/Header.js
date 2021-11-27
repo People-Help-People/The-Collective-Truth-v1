@@ -1,6 +1,6 @@
 import { useEthers } from "@usedapp/core";
 import { Link } from "react-router-dom";
-import { Alert } from "react-bootstrap"
+import { Alert, Nav } from "react-bootstrap"
 import './Styles.css';
 import { useDisplayAlert } from "../context/Alert";
 
@@ -8,19 +8,21 @@ export default function Header() {
     const { account } = useEthers();
     const { variant, message, show } = useDisplayAlert();
     return (
-        <div className="header" style={{ paddingTop: '20px' }}>
-            <div className="nav">
+        <div className="header">
+            <Nav className="mainNav">
                 <Link to="/">
-                    <h1 style={{ display: 'inline', marginTop: '0', color: 'white', textAlign: "center" }}> Community Audits </h1>
+                    <h1 style={{ display: 'inline', marginTop: '0', marginLeft: '30px', color: 'white' }}> <button>Home</button> </h1>
                 </Link>
-            </div>
-            {account ? <Link className="profileNav" to="/profile">
-                <button>{account}</button>
-            </Link> :
-                <Link className="profileNav" to="/register">
-                    <button>Register</button>
-                </Link>
-            }
+                <Link to="/explore" ><button>Explore</button></Link>
+                {account ? <Link className="profileNav" to="/profile">
+                    <button>{account}</button>
+                </Link> :
+                    <Link className="profileNav" to="/register">
+                        <button>Register</button>
+                    </Link>
+                }
+            </Nav>
+
             <div>
                 {
                     show &&

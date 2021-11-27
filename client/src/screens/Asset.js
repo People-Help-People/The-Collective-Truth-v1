@@ -16,7 +16,7 @@ export default function Asset() {
                 <div className="assetContainer">
                     <h1>{asset.name} ({asset.symbol})</h1>
                     <Image src={asset.logo} rounded height="64px" />
-                    <Tabs defaultActiveKey="tab1" id="assetTabs" className="mb-3">
+                    <Tabs defaultActiveKey="tab1"className="mb-3" style={{justifyContent:'center'}}>
                         <Tab eventKey="tab1" title="General">
                             <Ratings asset={asset} assetAddress={id} />
                         </Tab>
