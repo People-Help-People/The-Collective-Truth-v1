@@ -15,7 +15,7 @@ export default function Header() {
                 </Link>
                 <Link to="/explore" ><button>Explore</button></Link>
                 {account ? <Link className="profileNav" to="/profile">
-                    <button>{account}</button>
+                    <button>Profile</button>
                 </Link> :
                     <Link className="profileNav" to="/register">
                         <button>Register</button>

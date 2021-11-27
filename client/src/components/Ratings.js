@@ -32,9 +32,16 @@ export default function Ratings({ asset, assetAddress }) {
         <div>
             <h3>Asset not found on the chain</h3>
             <p>Now be a good lad and request so everyone could see the asset you were looking for</p>
-            <button className="primary" onClick={requestAssetHandler}>
-                {loading ? <SpinnerLoading /> : "Request Asset"}
-            </button>
+            {
+                account ?
+                    (<button className="primary" onClick={requestAssetHandler}>
+                        {loading ? <SpinnerLoading /> : "Request Asset"}
+                    </button>) :
+                    (<button className={"mt-3 disabled"} disabled>
+                        Request Asset
+                    </button>)
+            }
+
             <p>The dev team is working on rewarding good folks like you...</p>
         </div>
     ) :
@@ -130,7 +137,7 @@ export default function Ratings({ asset, assetAddress }) {
                                 (<button onClick={submitVote} className={"primaryButton mt-3"}>
                                     {loading ? <SpinnerLoading /> : "Submit Vote"}
                                 </button>) :
-                                (<button  className={"mt-3 disabled"} disabled>
+                                (<button className={"mt-3 disabled"} disabled>
                                     Submit Vote
                                 </button>)
                         }
