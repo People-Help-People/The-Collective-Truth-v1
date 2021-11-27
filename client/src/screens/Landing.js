@@ -11,9 +11,15 @@ export default function Onboard() {
                 <div>
                     <Link to="/explore"><button className="primary"> Explore</button></Link>
                 </div>
-            ) : (<Link to="/register">
-                <button className="primary">Join the Space! </button>
-            </Link>)
+            ) : (
+                <div style={{display:'flex',gap:'30px'}}>
+                    <Link to="/register">
+                        <button className="primary">Join the Space! </button>
+                    </Link>
+                    <Link to="/explore">
+                        <button className="primary">Explore for now </button>
+                    </Link>
+                </div>)
             }
         </div>
     )

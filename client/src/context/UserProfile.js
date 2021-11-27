@@ -5,7 +5,6 @@ export const UserProfile = createContext()
 
 const UserProfileProvider = ({ children }) => {
     const [userProfile, setUserProfile] = useState({
-        account: '',
         username: 'Hacker',
         bio: 'Noob.'
     });
@@ -18,7 +17,6 @@ const UserProfileProvider = ({ children }) => {
                 setUserProfile(userProfile);
         } else {
             setUserProfile({
-                account: '',
                 username: 'Hacker',
                 bio: 'Noob.'
             });

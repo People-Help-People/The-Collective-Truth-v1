@@ -1,3 +1,4 @@
+import { useEthers } from "@usedapp/core";
 import { useState } from "react";
 import { Col, Row, ListGroup, Badge, Form } from "react-bootstrap";
 import { useAssetRatings } from "../hooks/asset/useAssetRatings";
@@ -11,9 +12,10 @@ export default function Ratings({ asset, assetAddress }) {
     const [ratings3, setRatings3] = useState(5);
     const [loading, setLoading] = useState(false);
 
-    const [ratings : assetRating] = useAssetRatings(assetAddress);
+    const [ratings] = useAssetRatings(assetAddress);
     const [rateAsset] = useRateAsset(assetAddress, setLoading);
     const [requestAsset] = useRequestAsset(setLoading);
+    const { account } = useEthers();
 
     const requestAssetHandler = () => {
         setLoading(true);
@@ -29,7 +31,7 @@ export default function Ratings({ asset, assetAddress }) {
     return ratings.empty ? (
         <div>
             <h3>Asset not found on the chain</h3>
-            <p>Now be a good lad and request for the asset so everyone could see the asset you were looking for</p>
+            <p>Now be a good lad and request so everyone could see the asset you were looking for</p>
             <button className="primary" onClick={requestAssetHandler}>
                 {loading ? <SpinnerLoading /> : "Request Asset"}
             </button>
@@ -123,9 +125,16 @@ export default function Ratings({ asset, assetAddress }) {
                                 </Badge>
                             </ListGroup.Item>
                         </ListGroup>
-                        <button onClick={submitVote} className="primary mt-3">
-                            {loading ? <SpinnerLoading /> : "Submit Vote"}
-                        </button>
+                        {
+                            account ?
+                                (<button onClick={submitVote} className={"primaryButton mt-3"}>
+                                    {loading ? <SpinnerLoading /> : "Submit Vote"}
+                                </button>) :
+                                (<button  className={"mt-3 disabled"} disabled>
+                                    Submit Vote
+                                </button>)
+                        }
+
                     </Col>
                 </Row>
             </div>

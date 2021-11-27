@@ -15,13 +15,13 @@ export const useAssetRatings = (assetAddress) => {
         address: communityAuditsContractAddress,
         method: "getData",
         args: [assetAddress],
-    });
+    }) ?? [];
 
     const ratingsData = ratingsResponse?.length > 0 ? {
-        technicalImplementation: parseInt(ratingsResponse[0][5].technicalImplementation._hex),
-        founderReliability: parseInt(ratingsResponse[0][5].founderReliability._hex),
-        trustFactor: parseInt(ratingsResponse[0][5].trustFactor._hex),
-        overallScore: parseInt(ratingsResponse[0][5].overallScore._hex),
+        technicalImplementation: ratingsResponse[0][5].technicalImplementation.toNumber(),
+        founderReliability: ratingsResponse[0][5].founderReliability.toNumber(),
+        trustFactor: ratingsResponse[0][5].trustFactor.toNumber(),
+        overallScore: ratingsResponse[0][5].overallScore.toNumber(),
     } : {
         empty: true,
         message: '',

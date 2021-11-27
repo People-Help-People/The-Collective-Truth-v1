@@ -29,6 +29,13 @@ button.primary {
   color: white;
   font-size: 3rem;
 }
+button.disabled {
+  background-color: grey !important;
+  cursor:default;
+}
+button.disabled:hover{
+  opacity: 1 !important;;
+}
 .searchBar{
   width: 80%;
   display: flex;

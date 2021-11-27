@@ -14,9 +14,13 @@ export default function Header() {
                     <h1 style={{ display: 'inline', marginTop: '0', color: 'white', textAlign: "center" }}> Community Audits </h1>
                 </Link>
             </div>
-            {account != undefined && <Link className="profileNav" to="/profile">
-                <button>Profile</button>
-            </Link>}
+            {account ? <Link className="profileNav" to="/profile">
+                <button>{account}</button>
+            </Link> :
+                <Link className="profileNav" to="/register">
+                    <button>Register</button>
+                </Link>
+            }
             <div>
                 {
                     show &&
