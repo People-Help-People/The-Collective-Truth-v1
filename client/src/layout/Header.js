@@ -8,7 +8,7 @@ export default function Header() {
     const { account } = useEthers();
     const { variant, message, show } = useDisplayAlert();
     return (
-        <div className="header">
+        <div>
             <Nav className="mainNav">
                 <Link to="/">
                     <h1 style={{ display: 'inline', marginTop: '0', marginLeft: '30px', color: 'white' }}> <button>Home</button> </h1>
@@ -23,14 +23,13 @@ export default function Header() {
                 }
             </Nav>
 
-            <div>
-                {
-                    show &&
-                    <Alert variant={variant} style={{ textAlign: 'center', fontWeight: 700 }}>
-                        {message}
-                    </Alert>
-                }
-            </div>
+
+            {
+                show &&
+                <Alert variant={variant} style={{ textAlign: 'center', fontWeight: 700 }}>
+                    {message}
+                </Alert>
+            }
         </div>
     );
 }
