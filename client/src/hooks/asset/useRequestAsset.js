@@ -10,9 +10,8 @@ export const useRequestAsset = (setLoading) => {
     const { showAlertMessage } = useDisplayAlert();
 
     const { abi } = CommunityAudits
-    // const { chainId } = useEthers()
-    // const communityAuditsContractAddress = chainId ? networkMapping[String(chainId)]["CommunityAudits"][0] : constants.AddressZero;
-    const communityAuditsContractAddress = "0x21823EF61f71730C1Dd8973A76D69E1FF14De111";
+    const { chainId } = useEthers()
+    const communityAuditsContractAddress = chainId ? networkMapping[String(chainId)]["CommunityAudits"][0] : constants.AddressZero;
     const communityAuditsInterface = new utils.Interface(abi);
     const communityAuditsContract = new Contract(
         communityAuditsContractAddress,
@@ -23,7 +22,7 @@ export const useRequestAsset = (setLoading) => {
         transactionName: "Create"
     })
 
-    const requestAsset = (asset,assetAddress) => {
+    const requestAsset = (asset, assetAddress) => {
         requestAssetSend(assetAddress, asset.name, asset.symbol, asset.logo, 0);
     }
 
