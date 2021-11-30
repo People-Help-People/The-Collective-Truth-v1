@@ -8,12 +8,11 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 ReactDOM.render(
   <React.StrictMode>
     <DAppProvider config={{
-      readOnlyChainIds: [ChainId.Rinkeby, ChainId.Mumbai],
-      readOnlyUrls: {
-        [ChainId.Rinkeby]: 'https://rinkeby.infura.io/v3/21e64ef539f84e63ba09c252ad433cc1',
+      readOnlyChainIds: [ChainId.Mumbai],
+      readOnlyUrls: {        
         [ChainId.Mumbai]: 'https://polygon-mumbai.g.alchemy.com/v2/HgxyYtOsrf5jMYkK8ISB5UuLp9IXuBBT'
       },
-      supportedChains: [ChainId.Rinkeby, ChainId.Mumbai]
+      supportedChains: [ChainId.Mumbai]
     }}>
       <App />
     </DAppProvider>

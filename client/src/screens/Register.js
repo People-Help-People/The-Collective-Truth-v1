@@ -65,7 +65,8 @@ export default function Register() {
         (<>
             <button className="primary" onClick={connectWallet}>Connect your metamask</button>
             <p> If you dont have one. Go and create one real quick. We dont care if it has money or not. Just create a dummy account. There is no fee nor shady stuff anyway!</p>
-            <h2 style={{ color: 'red' }}>Only Rinkeby accounts are supported!</h2>
+            <h2 style={{ color: 'red' }}>Only Polygon Testnet accounts are supported!</h2>
+            <p>Here is an useful <a target="_blank" rel="noreferrer" href="https://medium.com/stakingbits/setting-up-metamask-for-polygon-matic-network-838058f6d844">guide</a></p>
         </>),
         (<>
             <h1>Update your profile</h1>
