@@ -6,6 +6,8 @@ networks:
         verify_flag: True
     kovan:        
         verify_flag: True
+    polygon-mumbai:
+        verify_flag: True
 wallets:
     from_key: ${PRIVATE_KEY}
     
