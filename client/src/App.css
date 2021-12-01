@@ -24,7 +24,7 @@ button:hover{
   opacity: .8;
 }
 
-button.primary {
+button.primary,.primaryButton {
   background-color: #4CAF50;
   color: white;
   font-size: 3rem;
