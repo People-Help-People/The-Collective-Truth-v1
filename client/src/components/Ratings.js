@@ -1,8 +1,8 @@
 import { useEthers } from "@usedapp/core";
 import { useState } from "react";
 import { Col, Row, ListGroup, Badge, Form } from "react-bootstrap";
-import { useAssetRatings } from "../hooks/asset/useAssetRatings";
-import { useRateAsset } from "../hooks/asset/useRateAsset";
+import { useAssetRatings } from "../hooks/asset/ratings/useAssetRatings";
+import { useRateAsset } from "../hooks/asset/ratings/useRateAsset";
 import { useRequestAsset } from "../hooks/asset/useRequestAsset";
 import SpinnerLoading from "../misc/Spinner";
 

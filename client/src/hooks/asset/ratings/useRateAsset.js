@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { useContractFunction, useContractCall, useEthers } from "@usedapp/core"
-import CommunityAudits from "../../chain-info/CommunityAudits.json"
+import CommunityAudits from "../../../chain-info/CommunityAudits.json"
 import { utils, constants } from "ethers"
 import { Contract } from "@ethersproject/contracts"
-import networkMapping from "../../chain-info/map.json"
-import { useDisplayAlert } from "../../context/Alert"
+import networkMapping from "../../../chain-info/map.json"
+import { useDisplayAlert } from "../../../context/Alert"
 
 export const useRateAsset = (assetAddress, setLoading) => {
     const { showAlertMessage } = useDisplayAlert();

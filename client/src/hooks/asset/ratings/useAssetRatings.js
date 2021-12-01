@@ -1,7 +1,7 @@
 import { useContractCall, useEthers } from "@usedapp/core"
-import CommunityAudits from "../../chain-info/CommunityAudits.json"
+import CommunityAudits from "../../../chain-info/CommunityAudits.json"
 import { utils, constants } from "ethers"
-import networkMapping from "../../chain-info/map.json"
+import networkMapping from "../../../chain-info/map.json"
 
 
 export const useAssetRatings = (assetAddress) => {

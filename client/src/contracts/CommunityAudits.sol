@@ -47,6 +47,16 @@ contract CommunityAudits {
         return assetContract.data();
     }
 
+    function getComments(address _contract)
+        public
+        view
+        checkAsset(_contract)
+        returns (Comment[] memory)
+    {
+        Asset assetContract = Asset(address(assetContractsMap[_contract]));
+        return assetContract.getComments();
+    }
+
     function rateAsset(
         address _contract,
         uint256 _technicalImplementation,
@@ -60,5 +70,22 @@ contract CommunityAudits {
             _trustFactor,
             _founderReliability
         );
+    }
+
+    function commentAsset(
+        address _contract,
+        string memory message
+    ) public checkAsset(_contract) {
+        Asset assetContract = Asset(address(assetContractsMap[_contract]));
+        assetContract.postComment(msg.sender,message);
+    }
+
+    function voteComment(
+        address _contract,
+        uint256 _comment,
+        VOTE _vote
+    ) public checkAsset(_contract) {
+        Asset assetContract = Asset(address(assetContractsMap[_contract]));
+        assetContract.voteComment(msg.sender,_comment,_vote);
     }
 }
