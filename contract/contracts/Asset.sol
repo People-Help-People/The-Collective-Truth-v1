@@ -109,7 +109,7 @@ contract Asset {
             overallScore,
             n
         );
-        ratedUsers.push(msg.sender);
+        ratedUsers.push(_address);
     }
 
     function appendMetric(
@@ -131,17 +131,17 @@ contract Asset {
 
     function postComment(address _address,string memory _message) public UniqueCommenter(_address) {
         Comment storage newComment = comments.push();
-        newComment.user = msg.sender;
+        newComment.user = _address;
         newComment.message = _message;
-        userCommentMap[msg.sender] = true;
+        userCommentMap[_address] = true;
     }
 
     modifier UniqueVoter(uint256 _comment,address _address) {
         require(
-            votedUsers[msg.sender][_comment] == false ,
+            votedUsers[_address][_comment] == false ,
             "You can only vote once!!!"
         );
-        votedUsers[msg.sender][_comment] = true;
+        votedUsers[_address][_comment] = true;
         _;
     }
 
