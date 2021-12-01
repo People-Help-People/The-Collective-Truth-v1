@@ -6,8 +6,7 @@ struct Comment {
     address user;
     string message;
     uint256 upvotes;
-    uint256 downvotes;
-    mapping(address => bool) votedUsers;
+    uint256 downvotes;    
 }
 enum VOTE {
     UP,
@@ -46,6 +45,7 @@ contract Asset {
 
     Comment[] public comments;
     mapping(address => bool) userCommentMap;
+    mapping(address => mapping(uint256 => bool)) votedUsers;
 
     constructor(
         address _contract,
@@ -71,6 +71,10 @@ contract Asset {
             rating
         );
         return returnData;
+    }
+
+    function getComments() public view returns (Comment[] memory){
+        return comments;
     }
 
     modifier UniqueRater(address _address) {
@@ -116,34 +120,34 @@ contract Asset {
         return (a * n + b) / (n + 1);
     }
 
-    modifier UniqueCommenter() {
+    modifier UniqueCommenter(address _address) {
         require(
-            userCommentMap[msg.sender] == false,
+            userCommentMap[_address] == false,
             "You can only post once!!!"
         );
-        userCommentMap[msg.sender] = true;
+        userCommentMap[_address] = true;
         _;
     }
 
-    function postComment(string memory _message) public UniqueCommenter {
+    function postComment(address _address,string memory _message) public UniqueCommenter(_address) {
         Comment storage newComment = comments.push();
         newComment.user = msg.sender;
         newComment.message = _message;
         userCommentMap[msg.sender] = true;
     }
 
-    modifier UniqueVoter(uint256 _comment) {
+    modifier UniqueVoter(uint256 _comment,address _address) {
         require(
-            comments[_comment].votedUsers[msg.sender] == false,
+            votedUsers[msg.sender][_comment] == false ,
             "You can only vote once!!!"
         );
-        comments[_comment].votedUsers[msg.sender] = true;
+        votedUsers[msg.sender][_comment] = true;
         _;
     }
 
-    function voteComment(uint256 _comment, VOTE _vote)
+    function voteComment(address _address, uint256 _comment, VOTE _vote)
         public
-        UniqueVoter(_comment)
+        UniqueVoter(_comment,_address)
     {
         if (_vote == VOTE.UP) {
             comments[_comment].upvotes++;
