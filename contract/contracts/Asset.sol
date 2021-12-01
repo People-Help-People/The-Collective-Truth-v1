@@ -2,6 +2,17 @@
 
 pragma solidity >=0.6.6 <0.9.0;
 
+struct Comment {
+    address user;
+    string message;
+    uint256 upvotes;
+    uint256 downvotes;
+    mapping(address => bool) votedUsers;
+}
+enum VOTE {
+    UP,
+    DOWN
+}
 struct Rating {
     uint256 overallScore;
     uint256 technicalImplementation;
@@ -13,7 +24,7 @@ enum CATEGORY {
     DApp,
     NFT
 }
-struct Data{
+struct Data {
     address assetAddress;
     string name;
     string symbol;
@@ -28,9 +39,13 @@ contract Asset {
     string public symbol;
     string public imageURL;
     CATEGORY public category;
+
     Rating public rating;
-    address [] ratedUsers;
+    address[] ratedUsers;
     mapping(address => bool) ratedUsersMap;
+
+    Comment[] public comments;
+    mapping(address => bool) userCommentMap;
 
     constructor(
         address _contract,
@@ -39,22 +54,28 @@ contract Asset {
         string memory _imageURL,
         CATEGORY _category
     ) {
-        assetAddress=_contract;
+        assetAddress = _contract;
         name = _name;
         symbol = _symbol;
         imageURL = _imageURL;
         category = _category;
     }
 
-    function data() public view returns(Data memory){
-        Data memory returnData = Data(assetAddress,name,symbol,imageURL,category,rating);
+    function data() public view returns (Data memory) {
+        Data memory returnData = Data(
+            assetAddress,
+            name,
+            symbol,
+            imageURL,
+            category,
+            rating
+        );
         return returnData;
     }
 
-
     modifier UniqueRater(address _address) {
         require(ratedUsersMap[_address] == false, "You can only rate once!!!");
-        ratedUsersMap[_address]=true;        
+        ratedUsersMap[_address] = true;
         _;
     }
 
@@ -91,7 +112,43 @@ contract Asset {
         uint256 a,
         uint256 b,
         uint256 n
-    ) pure private returns (uint256) {
+    ) private pure returns (uint256) {
         return (a * n + b) / (n + 1);
+    }
+
+    modifier UniqueCommenter() {
+        require(
+            userCommentMap[msg.sender] == false,
+            "You can only post once!!!"
+        );
+        userCommentMap[msg.sender] = true;
+        _;
+    }
+
+    function postComment(string memory _message) public UniqueCommenter {
+        Comment storage newComment = comments.push();
+        newComment.user = msg.sender;
+        newComment.message = _message;
+        userCommentMap[msg.sender] = true;
+    }
+
+    modifier UniqueVoter(uint256 _comment) {
+        require(
+            comments[_comment].votedUsers[msg.sender] == false,
+            "You can only vote once!!!"
+        );
+        comments[_comment].votedUsers[msg.sender] = true;
+        _;
+    }
+
+    function voteComment(uint256 _comment, VOTE _vote)
+        public
+        UniqueVoter(_comment)
+    {
+        if (_vote == VOTE.UP) {
+            comments[_comment].upvotes++;
+        } else if (_vote == VOTE.DOWN) {
+            comments[_comment].downvotes++;
+        }
     }
 }
