@@ -8,8 +8,8 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 ReactDOM.render(
   <React.StrictMode>
     <DAppProvider config={{
-      readOnlyChainIds: [ChainId.Mumbai],
-      readOnlyUrls: {        
+      readOnlyChainId: ChainId.Mumbai,
+      readOnlyUrls: {
         [ChainId.Mumbai]: 'https://polygon-mumbai.g.alchemy.com/v2/HgxyYtOsrf5jMYkK8ISB5UuLp9IXuBBT'
       },
       supportedChains: [ChainId.Mumbai]

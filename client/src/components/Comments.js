@@ -55,7 +55,7 @@ export default function Comments({ assetAddress }) {
                                         <ListGroup.Item
                                             as="li"
                                             className="d-flex justify-content-between align-items-start"
-                                            key={index}
+                                            key={comment[0]}
                                         >
                                             <div className="ms-2 me-auto">
                                                 <div className="fw-bold">{comment[1]}</div>
@@ -67,7 +67,7 @@ export default function Comments({ assetAddress }) {
                                                         {loading ? <SpinnerLoading /> : <FontAwesomeIcon icon={faHandPointUp} />}
                                                     </button>) :
                                                     (<button className={"mt-3 disabled"} disabled>
-                                                        FontAwesomeIcon icon={faHandPointUp} />
+                                                        <FontAwesomeIcon icon={faHandPointUp} />
                                                     </button>)
                                             }
                                             <Badge variant="primary" pill>
@@ -79,7 +79,7 @@ export default function Comments({ assetAddress }) {
                                                         {loading ? <SpinnerLoading /> : <FontAwesomeIcon icon={faHandPointDown} />}
                                                     </button>) :
                                                     (<button className={"mt-3 disabled"} disabled>
-                                                        FontAwesomeIcon icon={faHandPointUp} />
+                                                        <FontAwesomeIcon icon={faHandPointUp} />
                                                     </button>)
                                             }
                                             <Badge variant="primary" pill>
