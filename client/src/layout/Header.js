@@ -1,13 +1,13 @@
 
 import { useEthers } from "@usedapp/core";
 import { Link } from "react-router-dom";
-import { Alert, Nav } from "react-bootstrap"
+import { Alert, Nav, Dropdown } from "react-bootstrap"
 import './Styles.css';
 import { useDisplayAlert } from "../context/Alert";
 import UserBadge from "../misc/UserBadge";
 
 export default function Header() {
-    const { account } = useEthers();
+    const { account, deactivate, activateBrowserWallet } = useEthers();
     const { variant, message, show } = useDisplayAlert();
     return (
         <div>
@@ -17,12 +17,21 @@ export default function Header() {
                 </Link>
                 <Link to="/explore" ><button>Explore</button></Link>
 
-                {account ? <Link className="profileNav" to="/profile">
-                    <button> <UserBadge />  </button>
-                </Link> :
-                    <Link className="profileNav" to="/register">
-                        <button>Register</button>
-                    </Link>
+                {account ?
+                    <Dropdown>
+                        <Dropdown.Toggle variant="success" id="dropdown-basic">
+                            <UserBadge />
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                            <Link className="profileNav" to="/profile"> Profile  </Link>
+                            <button onClick={deactivate}>Disconnect</button>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    : localStorage.getItem("userProfile") ? <button onClick={activateBrowserWallet}>Login</button> : (< Link className="profileNav" to="/register">
+                        <button> Register</button>
+                    </Link>)
+
                 }
             </Nav>
 
@@ -33,6 +42,6 @@ export default function Header() {
                     {message}
                 </Alert>
             }
-        </div>
+        </div >
     );
 }
