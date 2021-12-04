@@ -22,8 +22,8 @@ export const useRegisterUser = (setLoading,nextCycle) => {
         transactionName: "Register User",
     })
 
-    const registerUser = (userAddress) => {
-        registerUserSend(userAddress);
+    const registerUser = () => {
+        registerUserSend();
     }
 
     useEffect(() => {

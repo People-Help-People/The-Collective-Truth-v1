@@ -12,7 +12,7 @@ import SpinnerLoading from "../misc/Spinner";
 export default function Header() {
     const { account, deactivate, activateBrowserWallet } = useEthers();
     const { variant, message, show } = useDisplayAlert();
-    const [balance] = useTruthBalance(account);
+    const [balance] = useTruthBalance();
 
     return (
         <div>

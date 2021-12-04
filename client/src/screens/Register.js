@@ -93,7 +93,7 @@ export default function Register() {
         };
         setUserProfile(userBio);
         localStorage.setItem('userProfile', JSON.stringify(userBio));        
-        registerUser(account);
+        registerUser();
     }
 
 
