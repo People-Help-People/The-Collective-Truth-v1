@@ -11,6 +11,11 @@
   padding: 5% 10% 0% 10%;
   text-align: center;
 }
+.info div{
+  background: none;
+  border: none;
+  text-align: left;
+}
 button {
   background-color: #f0f0f0;
   color: rgb(5, 4, 4);
