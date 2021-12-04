@@ -48,7 +48,6 @@ export default function Comments({ assetAddress }) {
                     </div>
                     : (
                         <div>
-                            <h3>Comments</h3>
                             <ListGroup as="ol">
                                 {
                                     comments?.data.map((comment, index) => (
