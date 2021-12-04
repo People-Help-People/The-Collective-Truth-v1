@@ -4,12 +4,15 @@ import { formatEther } from '@ethersproject/units'
 import tick from '../assets/tick.png';
 import { Link } from "react-router-dom";
 import { useUserProfile } from "../context/UserProfile";
+import { useRegisterUser } from "../hooks/user/useRegisterUser";
+import SpinnerLoading from "../misc/Spinner";
 
 export default function Register() {
     const [cycle, setCycle] = useState(0);
     const nextCycle = () => {
         setCycle(cycle + 1);
     };
+    const [loading, setLoading] = useState(false);
     const { userProfile, setUserProfile } = useUserProfile();
 
     // Connect Metamask
@@ -18,6 +21,39 @@ export default function Register() {
     const connectWallet = () => {
         activateBrowserWallet();
     };
+    const [registerUser] = useRegisterUser(setLoading, nextCycle);
+
+    const tokenAddress = '0xbd3bc5ae6ecb6170019e83ca85591c72d64c82da';
+    const tokenSymbol = 'TCT';
+    const tokenDecimals = 18;
+    const tokenImage = 'http://placekitten.com/200/300';
+    
+    const addTruthTokenToWallet = async () => {
+        try {
+            // wasAdded is a boolean. Like any RPC method, an error may be thrown.
+            const wasAdded = await window.ethereum.request({
+              method: 'wallet_watchAsset',
+              params: {
+                type: 'ERC20', // Initially only supports ERC20, but eventually more!
+                options: {
+                  address: tokenAddress, // The address that the token is at.
+                  symbol: tokenSymbol, // A ticker symbol or shorthand, up to 5 chars.
+                  decimals: tokenDecimals, // The number of decimals in the token
+                  image: tokenImage, // A string url of the token logo
+                },
+              },
+            });
+          
+            if (wasAdded) {
+              console.log('Thanks for your interest!');
+            } else {
+              console.log('Your loss!');
+            }
+          } catch (error) {
+            console.log(error);
+        }
+    };
+
     useEffect(() => {
         if (account && cycle === 0) {
             const userProfile = JSON.parse(localStorage.getItem('userProfile'));
@@ -49,6 +85,7 @@ export default function Register() {
     }
     const collectUserProfile = (e) => {
         e.preventDefault();
+        setLoading(true);
         const userBio = {
             ...userProfile,
             bio: e.target.bio.value,
@@ -56,8 +93,8 @@ export default function Register() {
             account: account
         };
         setUserProfile(userBio);
-        localStorage.setItem('userProfile', JSON.stringify(userBio));
-        nextCycle();
+        localStorage.setItem('userProfile', JSON.stringify(userBio));        
+        registerUser(account);
     }
 
 
@@ -74,8 +111,9 @@ export default function Register() {
                 <input style={inputStyle} type="text" value={account} disabled />
                 <input style={inputStyle} name="username" type="text" placeholder="username" />
                 <textarea style={inputStyle} name="bio" type="text" placeholder="Bio" />
-                <button className="primary" type="submit">Submit</button>
-                <button onClick={nextCycle}>Skip</button>
+                <button className="primary" type="submit">{loading ? <SpinnerLoading /> : "Submit"}</button>
+                <p style={{color:'white'}}>Please dont skip this step</p>
+                {/* <button onClick={nextCycle}>Skip</button> */}
             </form>
         </>),
         (<>
@@ -83,6 +121,7 @@ export default function Register() {
             <img src={tick} alt="tick" height="100px" />
             <h1>Welcome Aboard, {userProfile.username} </h1>
             <Link to="/explore"><button className="primary"> Explore</button></Link>
+            <button onClick={addTruthTokenToWallet}>Add Truth Token to Metamask</button>
         </>),
     ]
 
