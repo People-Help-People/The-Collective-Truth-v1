@@ -10,4 +10,10 @@ networks:
         verify_flag: True
 wallets:
     from_key: ${PRIVATE_KEY}
-    
+dependencies:
+  # - <organization/repo>@<version>
+  - OpenZeppelin/openzeppelin-contracts@4.0.0
+compiler:
+  solc:
+    remappings:
+      - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@4.0.0"

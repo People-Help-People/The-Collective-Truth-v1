@@ -3,6 +3,7 @@
 pragma solidity >=0.6.6 <0.9.0;
 
 import "./Asset.sol";
+import "./TruthToken.sol";
 
 // store a map of asset contracts
 // onboard assets to master if not available
@@ -10,6 +11,13 @@ import "./Asset.sol";
 contract CommunityAudits {
     Asset[] public assetContracts;
     mapping(address => address) public assetContractsMap;
+    TruthToken public truthTokens;
+    mapping(address => bool) public users; // later to be converted to an add=>add map for profile NFTs
+
+    constructor() {
+        truthTokens = new TruthToken(1614317 * 10**18);
+    }
+
 
     function create(
         address _contract,
@@ -72,12 +80,12 @@ contract CommunityAudits {
         );
     }
 
-    function commentAsset(
-        address _contract,
-        string memory message
-    ) public checkAsset(_contract) {
+    function commentAsset(address _contract, string memory message)
+        public
+        checkAsset(_contract)
+    {
         Asset assetContract = Asset(address(assetContractsMap[_contract]));
-        assetContract.postComment(msg.sender,message);
+        assetContract.postComment(msg.sender, message);
     }
 
     function voteComment(
@@ -86,6 +94,6 @@ contract CommunityAudits {
         VOTE _vote
     ) public checkAsset(_contract) {
         Asset assetContract = Asset(address(assetContractsMap[_contract]));
-        assetContract.voteComment(msg.sender,_comment,_vote);
+        assetContract.voteComment(msg.sender, _comment, _vote);
     }
 }
