@@ -12,31 +12,35 @@ contract CommunityAudits {
     Asset[] public assetContracts;
     mapping(address => address) public assetContractsMap;
     TruthToken public truthTokens;
+    address public truthTokenAddress;
     mapping(address => bool) public users; // later to be converted to an add=>add map for profile NFTs
 
     constructor() {
         truthTokens = new TruthToken(1614317 * 10**18);
     }
-        
-    modifier checkExistingUser(address _user) {
-        require(
-            users[_user] == false,
-            "User already registered."
-        );
+
+    modifier checkExistingUser() {
+        require(users[msg.sender] == false, "User already registered.");
         _;
     }
 
-    function registerUser(
-        address _user
-    ) public checkExistingUser(_user){
-        users[_user]=true;
-        truthTokens.transfer(_user,10*10**18);
+    function registerUser()
+        public
+        checkExistingUser()
+    {
+        users[msg.sender] = true;
+        truthTokens.transfer(msg.sender, 10 * 10**18);
     }
 
-    function truthBalance(address _user) view public returns(uint256){
-        return truthTokens.balanceOf(_user);
+    function truthBalance() public view returns (uint256) {
+        return truthTokens.balanceOf(msg.sender);
     }
 
+    modifier rewardUsers(uint256 _reward){        
+        require(users[msg.sender] == true, "User not registered.");
+        _;
+        truthTokens.transfer(msg.sender,_reward);
+    }
 
     function create(
         address _contract,
@@ -44,7 +48,7 @@ contract CommunityAudits {
         string memory _symbol,
         string memory _imageURL,
         CATEGORY _category
-    ) public {
+    ) payable public rewardUsers(10**18){
         Asset newContract = new Asset(
             _contract,
             _name,
@@ -89,7 +93,7 @@ contract CommunityAudits {
         uint256 _technicalImplementation,
         uint256 _trustFactor,
         uint256 _founderReliability
-    ) public checkAsset(_contract) {
+    ) public payable checkAsset(_contract) rewardUsers(10**17) {
         Asset assetContract = Asset(address(assetContractsMap[_contract]));
         assetContract.rate(
             msg.sender,
@@ -99,9 +103,10 @@ contract CommunityAudits {
         );
     }
 
-    function commentAsset(address _contract, string memory message)
-        public
+    function commentAsset(address _contract ,string memory message)
+        public payable 
         checkAsset(_contract)
+        rewardUsers(5*10**17)
     {
         Asset assetContract = Asset(address(assetContractsMap[_contract]));
         assetContract.postComment(msg.sender, message);
@@ -111,7 +116,7 @@ contract CommunityAudits {
         address _contract,
         uint256 _comment,
         VOTE _vote
-    ) public checkAsset(_contract) {
+    ) public payable checkAsset(_contract) rewardUsers(10**17){
         Asset assetContract = Asset(address(assetContractsMap[_contract]));
         assetContract.voteComment(msg.sender, _comment, _vote);
     }
