@@ -24,22 +24,19 @@ contract CommunityAudits {
         _;
     }
 
-    function registerUser()
-        public
-        checkExistingUser()
-    {
+    function registerUser() public checkExistingUser {
         users[msg.sender] = true;
         truthTokens.transfer(msg.sender, 10 * 10**18);
     }
 
-    function truthBalance() public view returns (uint256) {
-        return truthTokens.balanceOf(msg.sender);
+    function truthBalance(address _user) public view returns (uint256) {
+        return truthTokens.balanceOf(_user);
     }
 
-    modifier rewardUsers(uint256 _reward){        
+    modifier rewardUsers(uint256 _reward) {
         require(users[msg.sender] == true, "User not registered.");
         _;
-        truthTokens.transfer(msg.sender,_reward);
+        truthTokens.transfer(msg.sender, _reward);
     }
 
     function create(
@@ -48,7 +45,7 @@ contract CommunityAudits {
         string memory _symbol,
         string memory _imageURL,
         CATEGORY _category
-    ) payable public rewardUsers(10**18){
+    ) public payable rewardUsers(10**18) {
         Asset newContract = new Asset(
             _contract,
             _name,
@@ -103,10 +100,11 @@ contract CommunityAudits {
         );
     }
 
-    function commentAsset(address _contract ,string memory message)
-        public payable 
+    function commentAsset(address _contract, string memory message)
+        public
+        payable
         checkAsset(_contract)
-        rewardUsers(5*10**17)
+        rewardUsers(5 * 10**17)
     {
         Asset assetContract = Asset(address(assetContractsMap[_contract]));
         assetContract.postComment(msg.sender, message);
@@ -116,7 +114,7 @@ contract CommunityAudits {
         address _contract,
         uint256 _comment,
         VOTE _vote
-    ) public payable checkAsset(_contract) rewardUsers(10**17){
+    ) public payable checkAsset(_contract) rewardUsers(10**17) {
         Asset assetContract = Asset(address(assetContractsMap[_contract]));
         assetContract.voteComment(msg.sender, _comment, _vote);
     }

@@ -12,7 +12,7 @@ import SpinnerLoading from "../misc/Spinner";
 export default function Header() {
     const { account, deactivate, activateBrowserWallet } = useEthers();
     const { variant, message, show } = useDisplayAlert();
-    const [balance] = useTruthBalance();
+    const [balance] = useTruthBalance(account);
 
     return (
         <div>
@@ -24,9 +24,9 @@ export default function Header() {
 
                 {account ?
                     <>
-                        <Dropdown>                            
+                        <Dropdown>
                             <Dropdown.Toggle variant="success" id="dropdown-basic">
-                            {balance.empty ? <SpinnerLoading /> : <span disabled>{formatUnits(balance.data)} TCT </span>}
+                                {balance.empty ? <SpinnerLoading /> : <span style={{ color: 'whi' }} disabled>{formatUnits(balance.data)} TCT </span>}
                                 <UserBadge />
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
@@ -35,9 +35,12 @@ export default function Header() {
                             </Dropdown.Menu>
                         </Dropdown>
                     </>
-                    : localStorage.getItem("userProfile") ? <button onClick={activateBrowserWallet}>Login</button> : (< Link className="profileNav" to="/register">
+                    // : localStorage.getItem("userProfile") ? <button onClick={activateBrowserWallet}>Login</button> : (< Link className="profileNav" to="/register">
+                    //     <button> Register</button>
+                    // </Link>)
+                    : < Link className="profileNav" to="/register">
                         <button> Register</button>
-                    </Link>)
+                    </Link>
 
                 }
             </Nav>

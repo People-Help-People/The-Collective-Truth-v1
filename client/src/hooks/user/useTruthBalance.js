@@ -4,7 +4,7 @@ import { utils, constants } from "ethers"
 import networkMapping from "../../chain-info/map.json"
 
 
-export const useTruthBalance = () => {
+export const useTruthBalance = (userAddress) => {
     const { abi } = CommunityAudits
     const { chainId } = useEthers()
     const communityAuditsContractAddress = chainId ? networkMapping[String(chainId)]["CommunityAudits"][0] : constants.AddressZero;
@@ -16,7 +16,7 @@ export const useTruthBalance = () => {
         abi: communityAuditsInterface,
         address: communityAuditsContractAddress,
         method: "truthBalance",
-        args: [],
+        args: [userAddress],
     }) ?? [];
 
     const balanceData = balanceResponse?.length > 0 ? { data: balanceResponse[0] } : {
