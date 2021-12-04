@@ -17,6 +17,25 @@ contract CommunityAudits {
     constructor() {
         truthTokens = new TruthToken(1614317 * 10**18);
     }
+        
+    modifier checkExistingUser(address _user) {
+        require(
+            users[_user] == false,
+            "User already registered."
+        );
+        _;
+    }
+
+    function registerUser(
+        address _user
+    ) public checkExistingUser(_user){
+        users[_user]=true;
+        truthTokens.transfer(_user,10*10**18);
+    }
+
+    function truthBalance(address _user) view public returns(uint256){
+        return truthTokens.balanceOf(_user);
+    }
 
 
     function create(
