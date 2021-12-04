@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useEtherBalance, useEthers } from '@usedapp/core'
-import { formatEther } from '@ethersproject/units'
 import tick from '../assets/tick.png';
 import { Link } from "react-router-dom";
 import { useUserProfile } from "../context/UserProfile";
