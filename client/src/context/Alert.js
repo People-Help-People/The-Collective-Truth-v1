@@ -15,7 +15,7 @@ const AlertProvider = ({ children }) => {
         setShow(true);
         setTimeout(() => {
             setShow(false);
-        }, 5000);
+        }, 3000);
     }
 
     return (

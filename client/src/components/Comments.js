@@ -8,6 +8,7 @@ import SpinnerLoading from "../misc/Spinner";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandPointUp, faHandPointDown } from '@fortawesome/free-solid-svg-icons';
 import { useVoteComment } from "../hooks/asset/comments/useVoteComment";
+import { useDisplayAlert } from "../context/Alert";
 
 export default function Comments({ assetAddress }) {
     const [comment, setComment] = useState("");
@@ -16,6 +17,7 @@ export default function Comments({ assetAddress }) {
     const [comments] = useAssetComments(assetAddress);
     const [commentAsset] = useCommentAsset(assetAddress, setLoading);
     const [voteComment] = useVoteComment(assetAddress, setLoading);
+    const { showAlertMessage } = useDisplayAlert();
     // const comments = [];
 
     const { account } = useEthers();
@@ -23,23 +25,28 @@ export default function Comments({ assetAddress }) {
     const submitComment = (e) => {
         e.preventDefault();
         setLoading(true);
+        if (comment === "") {
+            showAlertMessage("Please enter a comment", "danger");
+            setLoading(false);
+            return;
+        }
         commentAsset(comment);
         setComment("");
     }
     return (
         <div>
-            <form onSubmit={submitComment}>
+            <Form onSubmit={submitComment} className="mb-5">
                 <input type="text" placeholder="Add a comment" value={comment} onChange={(e) => setComment(e.target.value)} />
                 {
                     account ?
-                        (<button className="primary" type="submit">
+                        (<button className="secondaryButton" type="submit">
                             {loading ? <SpinnerLoading /> : "Post"}
                         </button>) :
                         (<button className={"mt-3 disabled"} disabled>
                             Post
                         </button>)
                 }
-            </form>
+            </Form>
 
             {
                 comments.empty ?

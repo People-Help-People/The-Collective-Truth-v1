@@ -34,6 +34,11 @@ button.primary,.primaryButton {
   color: white;
   font-size: 3rem;
 }
+.secondaryButton {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 1.5rem;
+}
 button.disabled {
   background-color: grey !important;
   cursor:default;
