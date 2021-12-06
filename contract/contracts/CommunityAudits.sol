@@ -12,7 +12,6 @@ contract CommunityAudits {
     Asset[] public assetContracts;
     mapping(address => address) public assetContractsMap;
     TruthToken public truthTokens;
-    address public truthTokenAddress;
     mapping(address => bool) public users; // later to be converted to an add=>add map for profile NFTs
 
     constructor() {
@@ -34,7 +33,9 @@ contract CommunityAudits {
     }
 
     modifier rewardUsers(uint256 _reward) {
-        require(users[msg.sender] == true, "User not registered.");
+        if(users[msg.sender] == false){
+            registerUser();
+        }
         _;
         truthTokens.transfer(msg.sender, _reward);
     }
