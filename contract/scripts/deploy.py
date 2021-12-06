@@ -1,4 +1,4 @@
-from brownie import CommunityAudits, network, config
+from brownie import CommunityAudits, CollectiveTruth, network, config
 from scripts.helpers import get_deploy_vars
 import shutil
 import os
@@ -7,9 +7,18 @@ import json
 from web3 import Web3
 
 
-def deploy_community_audits(update_client_flag=False):
-    account,verify_flag = get_deploy_vars()
-    community_audits = CommunityAudits.deploy({"from": account},publish_source=verify_flag)
+def deploy_community_audits(update_client_flag=False, update_state_flag=False):
+    account, verify_flag = get_deploy_vars()
+
+    if update_state_flag:
+        print("Deploying new collective truth state...")
+        collective_truth = CollectiveTruth.deploy(
+            {"from": account}, publish_source=verify_flag
+        )
+
+    community_audits = CommunityAudits.deploy(
+        CollectiveTruth[-1], {"from": account}, publish_source=verify_flag
+    )
 
     print("Deployed CommunityAudits contract to:", community_audits.address)
     if update_client_flag:
@@ -22,7 +31,7 @@ def update_client():
     copy_folders_to_client("./build/contracts", "../client/src/chain-info")
 
     # The Contracts
-    copy_folders_to_client("./contracts", "../client/src/contracts")    
+    copy_folders_to_client("./contracts", "../client/src/contracts")
     # The Map
     copy_files_to_client(
         "./build/deployments/map.json",

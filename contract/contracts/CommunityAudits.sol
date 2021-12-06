@@ -4,85 +4,78 @@ pragma solidity >=0.6.6 <0.9.0;
 
 import "./Asset.sol";
 import "./TruthToken.sol";
+import "./CollectiveTruth.sol";
 
 // store a map of asset contracts
 // onboard assets to master if not available
 
 contract CommunityAudits {
-    Asset[] public assetContracts;
-    mapping(address => address) public assetContractsMap;
-    TruthToken public truthTokens;
-    mapping(address => bool) public users; // later to be converted to an add=>add map for profile NFTs
+    CollectiveTruth public data;
 
-    constructor() {
-        truthTokens = new TruthToken(1614317 * 10**18);
+    constructor(CollectiveTruth _data) {
+        data = CollectiveTruth(_data);
     }
 
     modifier checkExistingUser() {
-        require(users[msg.sender] == false, "User already registered.");
+        require(data.getUsers(msg.sender) == false, "User already registered.");
         _;
     }
 
     function registerUser() public checkExistingUser {
-        users[msg.sender] = true;
-        truthTokens.transfer(msg.sender, 10 * 10**18);
+        data.registerUser(msg.sender,0);
     }
 
     function truthBalance(address _user) public view returns (uint256) {
-        return truthTokens.balanceOf(_user);
+        return data.getTokenBalance(_user);
     }
 
     modifier rewardUsers(uint256 _reward) {
-        if(users[msg.sender] == false){
+        if (data.getUsers(msg.sender) == false) {
             registerUser();
         }
         _;
-        truthTokens.transfer(msg.sender, _reward);
+        data.transferTokens(msg.sender, _reward);
     }
 
-    function create(
+    function createAsset(
         address _contract,
         string memory _name,
         string memory _symbol,
         string memory _imageURL,
         CATEGORY _category
     ) public payable rewardUsers(10**18) {
-        Asset newContract = new Asset(
-            _contract,
-            _name,
-            _symbol,
-            _imageURL,
-            _category
-        );
-        assetContracts.push(newContract);
-        assetContractsMap[_contract] = address(newContract);
+        data.createAsset(_contract, _name, _symbol, _imageURL, _category);
     }
 
     modifier checkAsset(address _contract) {
         require(
-            assetContractsMap[_contract] != address(0),
+            data.getAssetContractsMap(_contract) != address(0),
             "Sorry this asset is not available, Please consider adding it to the system."
         );
         _;
     }
 
-    function getData(address _contract)
+    function getAssetRatings(address _contract)
         public
         view
         checkAsset(_contract)
         returns (Data memory)
     {
-        Asset assetContract = Asset(address(assetContractsMap[_contract]));
+        Asset assetContract = Asset(
+            address(data.getAssetContractsMap(_contract))
+        );
         return assetContract.data();
     }
 
-    function getComments(address _contract)
+    function getAssetComments(address _contract)
         public
         view
         checkAsset(_contract)
         returns (Comment[] memory)
     {
-        Asset assetContract = Asset(address(assetContractsMap[_contract]));
+        Asset assetContract = Asset(
+            address(data.getAssetContractsMap(_contract))
+        );
         return assetContract.getComments();
     }
 
@@ -92,7 +85,9 @@ contract CommunityAudits {
         uint256 _trustFactor,
         uint256 _founderReliability
     ) public payable checkAsset(_contract) rewardUsers(10**17) {
-        Asset assetContract = Asset(address(assetContractsMap[_contract]));
+        Asset assetContract = Asset(
+            address(data.getAssetContractsMap(_contract))
+        );
         assetContract.rate(
             msg.sender,
             _technicalImplementation,
@@ -107,7 +102,9 @@ contract CommunityAudits {
         checkAsset(_contract)
         rewardUsers(5 * 10**17)
     {
-        Asset assetContract = Asset(address(assetContractsMap[_contract]));
+        Asset assetContract = Asset(
+            address(data.getAssetContractsMap(_contract))
+        );
         assetContract.postComment(msg.sender, message);
     }
 
@@ -116,7 +113,9 @@ contract CommunityAudits {
         uint256 _comment,
         VOTE _vote
     ) public payable checkAsset(_contract) rewardUsers(10**17) {
-        Asset assetContract = Asset(address(assetContractsMap[_contract]));
+        Asset assetContract = Asset(
+            address(data.getAssetContractsMap(_contract))
+        );
         assetContract.voteComment(msg.sender, _comment, _vote);
     }
 }
