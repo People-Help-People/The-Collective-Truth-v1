@@ -15,7 +15,7 @@ export const useAssetComments = (assetAddress) => {
     const commentsResponse = useContractCall({
         abi: communityAuditsInterface,
         address: communityAuditsContractAddress,
-        method: "getComments",
+        method: "getAssetComments",
         args: [assetAddress],
     }) ?? [];
 

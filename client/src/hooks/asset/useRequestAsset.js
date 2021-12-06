@@ -18,8 +18,8 @@ export const useRequestAsset = (setLoading) => {
         communityAuditsInterface
 
     )
-    const { send: requestAssetSend, state: requestAssetState } = useContractFunction(communityAuditsContract, "create", {
-        transactionName: "Create"
+    const { send: requestAssetSend, state: requestAssetState } = useContractFunction(communityAuditsContract, "createAsset", {
+        transactionName: "Create Asset"
     })
 
     const requestAsset = (asset, assetAddress) => {

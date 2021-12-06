@@ -22,7 +22,7 @@ export default function Register() {
     };
     const [registerUser] = useRegisterUser(setLoading, nextCycle);
 
-    const tokenAddress = '0x606183f6f05b5aba9b67bc7390f48cfb13204d41';
+    const tokenAddress = '0xda4599aa5ad48029c530261944d758752c9a7d44';
     const tokenSymbol = 'TCT';
     const tokenDecimals = 18;
     const tokenImage = 'http://placekitten.com/200/300';

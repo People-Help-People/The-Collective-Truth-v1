@@ -15,7 +15,7 @@ export const useAssetRatings = (assetAddress) => {
     const ratingsResponse = useContractCall({
         abi: communityAuditsInterface,
         address: communityAuditsContractAddress,
-        method: "getData",
+        method: "getAssetRatings",
         args: [assetAddress],
     }) ?? [];
 
