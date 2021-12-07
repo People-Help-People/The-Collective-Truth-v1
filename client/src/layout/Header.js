@@ -8,11 +8,17 @@ import { useDisplayAlert } from "../context/Alert";
 import UserBadge from "../misc/UserBadge";
 import { useTruthBalance } from "../hooks/user/useTruthBalance";
 import SpinnerLoading from "../misc/Spinner";
+import { useCheckExistingUser } from "../hooks/user/useCheckExistingUser";
+import { useEffect } from "react";
 
 export default function Header() {
     const { account, deactivate, activateBrowserWallet } = useEthers();
     const { variant, message, show } = useDisplayAlert();
     const [balance] = useTruthBalance(account);
+    const [authState] = useCheckExistingUser(account || '0x0000000000000000000000000000000000000000');
+
+    useEffect(() => {
+    }, [account]);
 
     return (
         <div>
@@ -35,17 +41,15 @@ export default function Header() {
                             </Dropdown.Menu>
                         </Dropdown>
                     </>
-                    // : localStorage.getItem("userProfile") ? <button onClick={activateBrowserWallet}>Login</button> : (< Link className="profileNav" to="/register">
-                    //     <button> Register</button>
-                    // </Link>)
-                    : < Link className="profileNav" to="/register">
-                        <button> Register</button>
-                    </Link>
-
+                    : authState.loading ? <SpinnerLoading /> :
+                        authState.data ?
+                            <button onClick={activateBrowserWallet}>Connect</button> :
+                            localStorage.getItem('userProfile') ? <button onClick={activateBrowserWallet}>Connect</button> :
+                                (< Link className="profileNav" to="/register">
+                                    <button>Register</button>
+                                </Link>)
                 }
             </Nav>
-
-
             {
                 show &&
                 <Alert variant={variant} style={{ textAlign: 'center', fontWeight: 700 }}>
