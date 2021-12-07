@@ -37,13 +37,21 @@ contract CommunityAudits {
         data.transferTokens(msg.sender, _reward);
     }
 
+    modifier checkExistingAsset(address _contract){
+        require(
+            data.getAssetContractsMap(_contract) == address(0),
+            "This asset is already added to the system."
+        );
+        _;
+    }
+
     function createAsset(
         address _contract,
         string memory _name,
         string memory _symbol,
         string memory _imageURL,
         CATEGORY _category
-    ) public payable rewardUsers(10**18) {
+    ) public payable checkExistingAsset(_contract) rewardUsers(10**18) {
         data.createAsset(_contract, _name, _symbol, _imageURL, _category);
     }
 
