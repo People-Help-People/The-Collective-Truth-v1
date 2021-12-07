@@ -21,7 +21,7 @@ export default function Asset() {
                         <Tab eventKey="tab1" title="General">
                             <Ratings asset={asset} assetAddress={id} />
                         </Tab>
-                        <Tab eventKey="tab2" title="Community">
+                        <Tab eventKey="tab2" title="Discussions">
                             <Comments assetAddress={id} />
                         </Tab>
                         <Tab eventKey="tab3" title="Experts">
