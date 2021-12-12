@@ -1,4 +1,5 @@
 # The Collective Truth
+[![image](https://user-images.githubusercontent.com/33366456/145701951-0a66085e-dd48-4d0a-b3b4-0be8837f0f0a.png)](https://www.youtube.com/watch?v=GGjS77ZFVV0 "The Collective Truth - Demo")
 
 ## Short Pitch
 ### Pain
