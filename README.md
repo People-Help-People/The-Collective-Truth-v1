@@ -1,4 +1,5 @@
 # The Collective Truth
+[![image](https://user-images.githubusercontent.com/33366456/145701951-0a66085e-dd48-4d0a-b3b4-0be8837f0f0a.png)](https://www.youtube.com/watch?v=GGjS77ZFVV0 "The Collective Truth - Demo")
 
 ## Short Pitch
 ### Pain
@@ -16,15 +17,13 @@ Keeping the above solution in mind, the project achieves it with following featu
 2. Ratings, scoring 
 3. SMEs audit reports, detailed analysis. 
 
-## Video Demo
-
 ## Project start date
 23 November 2021
 ## Wallet
-Metamask: 0xbFB9e3184e4984647c9eD556fA2aBd5Ef132a7A9
+Metamask: 0xCe58416Ee53Adf3722E8a9AB413265fC356F784f
 ## Person of contact
 - Harish R
-- arishh2@gmail.com
+- [DM me on Twitter](https://twitter.com/harishteens)
 
 ## Additional information
 The Collective Truth is envisioned to be a fully autonomous, robust, community driven project leaving the creator(me) behind. This is why all the initally minted tokens are held by the smart contract and the creator(me). The creator is just another user and there is no spooky transfer tokens in built to withdraw all the funds from the contract at a later time. Rewards are the only way to gain access to some tokens.
